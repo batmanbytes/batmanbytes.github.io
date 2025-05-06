@@ -4,24 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proof of Concept</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f4f4f4;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #333;
-    }
-  </style>
+  
 </head>
 <body>
   <div class="container">
@@ -29,13 +12,26 @@
     <h2>User steps</h2>
     <!-- Ordered list -->
 <ol>
-  <li>Main page displays some basic info, but does a very important process in the background: It crawls MRR to find cheap hashrate. More about this step will be described below this list. The reason this is important is because the user must be aware of the rates, before moving forward.</li>
+  <li>Main page displays some basic info, but does a very important process in the background: It crawls MRR to find cheap hashrate. More about this step will be described below this list. The reason this is important is because the user must be aware of the rates, before moving forward. For example, he may select 10 PH/s, for 24 hours. The backend should automatically search MRR for the best rate, given that data, and if this would cost e.g., 60 sat / TH / day, we can display him a multiple of that cost.</li>
   <li>User is asked to fill a simple form of how much hashrate he wants to rent, for how many hours, which cryptocurrency payment etc. His payment can be deducted by both his Altquick balance, or by completing an independent-to-altquick deposit.</li>
   <li>Before paying anything, the user is aware of the rental cost, but needs to configure his pool first. If he pays before he configures his pool, we risk refunding due to invalid pool.</li>
-  <li>Once we have his (valid) pool, and have received his money, we move forward to the API communication system:
-    <li>sds</li>
+  <li>Once we have his (valid) pool, and have received his money, we move forward to the API communication process: (follows API terminology)
+    <ul>
+        <li>We use "PUT /rental" to create a new rental. As inputs, we use the rig ID of the best rig our search algorithm found from step 1, and the hours user requested as length etc.</li>
+        <li>We use "GET /rental/[ID1];[ID2];.../graph" to show user a graph of his hashrate.</li>
+    </ul>
   </li>
 </ol>
+
+<p>Potential problems that might arise and that we have to resolve:</p>
+<ul>
+    <li>Our search algorithm finds a cheap rig, but that rig is offline / does not mine at the moment. What do we do? Do we temporarily blacklist it and search for another?</li>
+    <li>After paying, the user receives sufficient hashrate, but somewhere in the middle, the rig's hashrate declines. What do we do? Do we refund him? Or do we try to find another rig?</li>
+    <li>His pool might be valid, but BOOST miners might not connect for some reason. Probably "PUT /account/pool/test" takes this into account.</li>
+</ul>
+
+<h2>Crawling from MRR</h2>
+<p>Empty, at the moment.</p>
 </div>
 </body>
 </html>
