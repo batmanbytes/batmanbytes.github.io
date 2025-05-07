@@ -31,7 +31,28 @@
 </ul>
 
 <h2>Crawling from MRR</h2>
-<p>Empty, at the moment.</p>
+<p>To find the cheapest rig from MRR, we need to take account the following parameters:</p>
+<ul>
+  <li>Min hours of rental. If the rig's min hours is greater than the user's requested time, we ignore it.</li>
+  <li>Same goes for maximum hours of rental. It can be improved in the future, though, because if a rig rents for 96 hours max, we can re-rent it once it finishes, and therefore achieve rental length greater than 96 hours. [LOW PRIORITY]</li>
+  <li>The requested hashrate. If user wants 100 PH/s, we should accept his request only if every single criterion is met.<ul>
+    <li>100 PH/s is available to rent, in sum, from both SHA256 and SHA256-BOOST. For example, if there are 50 rigs, each selling 2 PH/s, then this criterion is met. This particular criterion won't be easy to check, instantly, because searching MRR's rigs might take some time. This will probably be implemented using "GET /rig", which lists all rigs of a specified algo, identically to the algo's marketplace page. We can then sort them based on hashrate, in descending order (from most hashrate, to least).</li>
+    <li>Every one of these rigs are online / offer hashrate at the moment.</li>
+  </ul></li>
+  <li>Once all previous criteria are met, and the average price for each TH/day is, say, 80 sats, we can charge the arbitrage, and show that (e.g., 220 sats).</li>
+</ul>
+
+<p>That's the overall concept. The rest of the implementation will be hidden in the details. Theoretically, that's the structure of hashquick.</p>
+</br>
+<p>This is how it could look on a first glimpse. (Images generated using ChatGPT.)</p>
+
+<center><img src="images/1.png" alt="Image 1"></br>
+<img src="images/2.png" alt="Image 2"></br>
+<img src="images/3.png" alt="Image 3"></br>
+<img src="images/4.png" alt="Image 4"></br>
+<img src="images/5.png" alt="Image 5">
+</center>
+
 </div>
 </body>
 </html>
