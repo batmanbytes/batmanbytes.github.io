@@ -1,9 +1,442 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Lost?</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <title>BrightSmiles Dental Clinic</title>
+  <meta name="description" content="A clean, serious one-page dental clinic website template. Modern, accessible, and fast – ready to customize for your practice." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%231e88e5' d='M32 6c6 0 10 2 13 5 5 5 7 16 0 27-3 5-6 14-8 19-1 3-5 3-6 0-2-5-5-14-8-19C16 27 14 16 19 11c3-3 7-5 13-5Z'/%3E%3Ccircle cx='25' cy='23' r='3' fill='%23fff'/%3E%3Ccircle cx='39' cy='23' r='3' fill='%23fff'/%3E%3C/svg%3E" />
+  <meta property="og:title" content="BrightSmiles Dental Clinic" />
+  <meta property="og:description" content="Clean, serious one-page dental template – services, team, pricing, and booking form." />
+  <meta property="og:type" content="website" />
+  <style>
+    /* ... all your existing CSS remains unchanged ... */
+
+    /* slightly smaller floating top button on mobile */
+    .top-btn { right: 14px; bottom: 14px; padding: 8px 10px; }
+
+    /* ✅ FIX: Ensure readable black text on mobile */
+    @media (max-width: 860px) {
+      body, h1, h2, h3, h4, h5, h6, p, small, li, span, a, td, th {
+        color: #000 !important;
+      }
+      .muted, .foot-muted {
+        color: #000 !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>Lost?</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="#home" aria-label="BrightSmiles home">
+        <img alt="BrightSmiles tooth logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath fill='%231e88e5' d='M32 6c6 0 10 2 13 5 5 5 7 16 0 27-3 5-6 14-8 19-1 3-5 3-6 0-2-5-5-14-8-19C16 27 14 16 19 11c3-3 7-5 13-5Z'/%3E%3C/svg%3E" />
+        <span>BrightSmiles Dental</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div>
+        <a class="pill phone" href="tel:+1234567890" aria-label="Call us">📞 +1 (234) 567‑890</a>
+        <a class="cta" href="#booking">Book Appointment</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="badge">Gentle, modern dental care</span>
+          <h1>Healthy teeth, confident smiles.</h1>
+          <p>Trusted family dentistry offering checkups, cosmetic treatments, and emergency care.
+             Same‑day appointments available.</p>
+          <div class="kpi">
+            <span class="pill">✔ New patients welcome</span>
+            <span class="pill">✔ Most insurance accepted</span>
+            <span class="pill">✔ 24/7 emergency line</span>
+          </div>
+          <p style="margin-top:16px">
+            <a class="cta" href="#booking">Book now</a>
+            <a class="pill" style="margin-left:8px" href="tel:+1234567890">Call: +1 (234) 567‑890</a>
+          </p>
+          <div class="stats">
+            <div class="stat"><b>15+ yrs</b><span class="muted">Experience</span></div>
+            <div class="stat"><b>4.9★</b><span class="muted">Patient rating</span></div>
+            <div class="stat"><b>7 days</b><span class="muted">Open weekly</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-card">
+            <h2 style="margin:0 0 6px">Hours</h2>
+            <ul class="list-clean muted">
+              <li>Mon–Fri: 08:00 – 18:00</li>
+              <li>Saturday: 09:00 – 14:00</li>
+              <li>Sunday: Emergency only</li>
+            </ul>
+            <div class="divider"></div>
+            <h2 style="margin:0 0 6px">Location</h2>
+            <p class="muted" style="margin:0">123 Main Street, Suite 200, YourCity</p>
+            <p style="margin:10px 0 0">
+              <a class="pill" href="#map">View map</a>
+              <a class="pill" href="mailto:hello@brightsmiles.example">Email us</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">Why choose BrightSmiles</h2>
+        <p class="section-lead">We focus on comfort, clarity, and results. Evidence‑based treatments with transparent pricing.</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <span class="icon" aria-hidden="true">🦷</span>
+            <h3>Comprehensive care</h3>
+            <p class="muted">Preventive, restorative, pediatric, and cosmetic dentistry under one roof.</p>
+          </div>
+          <div class="card">
+            <span class="icon" aria-hidden="true">🛰️</span>
+            <h3>Modern technology</h3>
+            <p class="muted">Digital X‑rays, intraoral cameras, 3D scanning, and gentle anesthesia options.</p>
+          </div>
+          <div class="card">
+            <span class="icon" aria-hidden="true">🤝</span>
+            <h3>Patient‑first approach</h3>
+            <p class="muted">Clear explanations, no pressure. We present options and help you decide.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" aria-labelledby="services-title">
+      <div class="container">
+        <h2 id="services-title" class="section-title">Services</h2>
+        <p class="section-lead">Common treatments we provide. Ask about custom treatment plans.</p>
+        <div class="grid grid-3">
+          <div class="card service">
+            <h3>Checkups & Cleaning</h3>
+            <p>Exams, prophylaxis, fluoride, and personalized home‑care advice.</p>
+          </div>
+          <div class="card service">
+            <h3>Fillings & Crowns</h3>
+            <p>Tooth‑colored restorations, onlays, same‑day crowns where indicated.</p>
+          </div>
+          <div class="card service">
+            <h3>Root Canal Therapy</h3>
+            <p>Pain relief and tooth preservation using modern endodontic techniques.</p>
+          </div>
+          <div class="card service">
+            <h3>Dental Implants</h3>
+            <p>Single or multiple tooth replacement in collaboration with specialists.</p>
+          </div>
+          <div class="card service">
+            <h3>Orthodontics</h3>
+            <p>Clear aligners and braces for teens and adults.</p>
+          </div>
+          <div class="card service">
+            <h3>Cosmetic & Whitening</h3>
+            <p>Veneers, bonding, in‑office and take‑home whitening kits.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team">
+      <div class="container">
+        <h2 class="section-title">Meet the team</h2>
+        <p class="section-lead">Friendly clinicians focused on comfort and outcomes.</p>
+        <div class="grid grid-3">
+          <div class="card team-card">
+            <div class="avatar" role="img" aria-label="Portrait placeholder"></div>
+            <div>
+              <h3 style="margin:0">Dr. Alex Carter, DDS</h3>
+              <small>General & Cosmetic Dentist</small>
+              <p class="muted" style="margin:.4em 0 0">Member ADA · Invisalign Provider</p>
+            </div>
+          </div>
+          <div class="card team-card">
+            <div class="avatar" role="img" aria-label="Portrait placeholder"></div>
+            <div>
+              <h3 style="margin:0">Dr. Priya Nair, DMD</h3>
+              <small>Endodontics</small>
+              <p class="muted" style="margin:.4em 0 0">Gentle root canal therapy</p>
+            </div>
+          </div>
+          <div class="card team-card">
+            <div class="avatar" role="img" aria-label="Portrait placeholder"></div>
+            <div>
+              <h3 style="margin:0">Taylor Brooks, RDH</h3>
+              <small>Dental Hygienist</small>
+              <p class="muted" style="margin:.4em 0 0">Preventive care & education</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <div class="container">
+        <h2 class="section-title">Transparent pricing</h2>
+        <p class="section-lead">We accept most insurance plans and offer financing options.</p>
+        <div class="card">
+          <table class="price-table" aria-label="Prices">
+            <thead>
+              <tr><th scope="col">Treatment</th><th scope="col">Notes</th><th scope="col">From</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Comprehensive Exam & Cleaning</td><td>New patient special</td><td>$99</td></tr>
+              <tr><td>Filling (tooth‑colored)</td><td>Per surface</td><td>$150</td></tr>
+              <tr><td>Root Canal</td><td>Anterior</td><td>$650</td></tr>
+              <tr><td>Crown</td><td>Porcelain fused to metal</td><td>$980</td></tr>
+              <tr><td>Implant (restoration)</td><td>Crown on existing implant</td><td>$1,100</td></tr>
+              <tr><td>Clear Aligner Case</td><td>Mild to moderate</td><td>$2,900</td></tr>
+            </tbody>
+          </table>
+          <p class="help">Prices are examples; replace with your clinic fees. Insurance benefits may vary.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials">
+      <div class="container">
+        <h2 class="section-title">What patients say</h2>
+        <div class="grid grid-3">
+          <div class="card">
+            <p class="quote">“Fast, painless, and they explained everything. Five stars.”</p>
+            <p class="muted">— Jamie R.</p>
+          </div>
+          <div class="card">
+            <p class="quote">“The team fit me in for a same‑day emergency appointment. Lifesavers!”</p>
+            <p class="muted">— Marco P.</p>
+          </div>
+          <div class="card">
+            <p class="quote">“My kids actually <em>like</em> going to the dentist now.”</p>
+            <p class="muted">— Alina K.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <div class="grid grid-2">
+          <div>
+            <details>
+              <summary>Do you accept my insurance?</summary>
+              <p class="muted">We work with most major plans and help you maximize benefits. Bring your card and we’ll verify.</p>
+            </details>
+            <details>
+              <summary>Do you offer financing?</summary>
+              <p class="muted">Yes — flexible monthly payments available for larger treatments (subject to approval).</p>
+            </details>
+            <details>
+              <summary>Is whitening safe?</summary>
+              <p class="muted">Yes when supervised by a dentist. We tailor strength to reduce sensitivity.</p>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary>What if I’m anxious?</summary>
+              <p class="muted">We offer gentle techniques, longer appointments, and optional nitrous sedation.</p>
+            </details>
+            <details>
+              <summary>Do you see kids?</summary>
+              <p class="muted">Absolutely. We love families and provide positive, educational visits.</p>
+            </details>
+            <details>
+              <summary>Emergency policy</summary>
+              <p class="muted">Call our 24/7 line for urgent issues. We aim to see you the same day.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / BOOKING -->
+    <section id="contact">
+      <div class="container contact-wrap">
+        <div>
+          <h2 class="section-title">Contact</h2>
+          <p class="section-lead">Call, email, or send a booking request — we’ll confirm ASAP.</p>
+          <div class="card">
+            <p class="muted" style="margin:0">📍 123 Main Street, Suite 200, YourCity</p>
+            <p style="margin:.3em 0 0">📞 <a href="tel:+1234567890">+1 (234) 567‑890</a> &nbsp; · &nbsp; ✉️ <a href="mailto:hello@brightsmiles.example">hello@brightsmiles.example</a></p>
+            <p class="muted" style="margin:.6em 0 0">Parking on site · Wheelchair accessible</p>
+          </div>
+          <div id="map" class="card" aria-label="Map" style="height:240px;display:grid;place-items:center">
+            <p class="muted">Embed your map here (Google Maps iframe)</p>
+          </div>
+        </div>
+        <div id="booking">
+          <h2 class="section-title">Request an appointment</h2>
+          <form class="card" id="apptForm" novalidate>
+            <div class="grid grid-2">
+              <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe" />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" required inputmode="tel" placeholder="(555) 123‑4567" />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+              </div>
+              <div>
+                <label for="service">Service</label>
+                <select id="service" name="service" required>
+                  <option value="" selected disabled>Choose…</option>
+                  <option>Checkup & Cleaning</option>
+                  <option>Filling / Crown</option>
+                  <option>Root Canal</option>
+                  <option>Implant Consultation</option>
+                  <option>Whitening</option>
+                  <option>Orthodontics</option>
+                </select>
+              </div>
+              <div>
+                <label for="date">Preferred date</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div>
+                <label for="time">Preferred time</label>
+                <input id="time" name="time" type="time" />
+              </div>
+            </div>
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Anything we should know?"></textarea>
+            <label style="display:flex;gap:10px;align-items:flex-start;margin-top:10px">
+              <input type="checkbox" id="consent" required />
+              <span>I agree to be contacted about my request and I’ve read the privacy notice.</span>
+            </label>
+            <div class="form-actions">
+              <button class="cta" type="submit">Send request</button>
+              <span id="formNotice" class="notice" role="status" aria-live="polite"></span>
+            </div>
+            <p class="help">No payment is taken here. We’ll confirm your appointment by phone/email.</p>
+            <noscript><p class="help">JavaScript is off — this form will use your email app to send the request.</p></noscript>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>BrightSmiles Dental</strong>
+        <p class="foot-muted">Gentle, modern dentistry for all ages.</p>
+        <p class="foot-muted">© <span id="y"></span> BrightSmiles Dental. All rights reserved.</p>
+      </div>
+      <div>
+        <strong>Contact</strong>
+        <ul class="list-clean foot-muted">
+          <li><a href="tel:+1234567890">+1 (234) 567‑890</a></li>
+          <li><a href="mailto:hello@brightsmiles.example">hello@brightsmiles.example</a></li>
+          <li>123 Main Street, YourCity</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Quick links</strong>
+        <ul class="list-clean foot-muted">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#booking">Book now</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <a class="top-btn" href="#home" aria-label="Back to top">↑</a>
+
+  <!-- JSON‑LD schema (replace with your details) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dentist",
+    "name": "BrightSmiles Dental",
+    "image": "https://example.com/logo.png",
+    "telephone": "+1234567890",
+    "email": "hello@brightsmiles.example",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Main Street, Suite 200",
+      "addressLocality": "YourCity",
+      "addressRegion": "YourState",
+      "postalCode": "00000",
+      "addressCountry": "US"
+    },
+    "openingHours": ["Mo-Fr 08:00-18:00","Sa 09:00-14:00"],
+    "url": "https://example.com"
+  }
+  </script>
+
+  <script>
+    // Footer year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Form handler: validate, then send via mailto fallback if no backend
+    const form = document.getElementById('apptForm');
+    const notice = document.getElementById('formNotice');
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      notice.className = 'notice';
+      notice.style.display = 'inline';
+
+      const fd = new FormData(form);
+      for (const [k,v] of fd.entries()){
+        if (!v && k !== 'notes'){ // simple required check
+          notice.textContent = 'Please complete all required fields.';
+          notice.classList.add('err');
+          return;
+        }
+      }
+      if (!document.getElementById('consent').checked){
+        notice.textContent = 'Please agree to be contacted.';
+        notice.classList.add('err');
+        return;
+      }
+      // Compose email (you can swap this for your own endpoint)
+      const subject = encodeURIComponent('Appointment request from ' + fd.get('name'));
+      const body = encodeURIComponent([
+        'Name: ' + fd.get('name'),
+        'Phone: ' + fd.get('phone'),
+        'Email: ' + fd.get('email'),
+        'Service: ' + fd.get('service'),
+        'Preferred date: ' + fd.get('date'),
+        'Preferred time: ' + (fd.get('time') || 'Any'),
+        'Notes: ' + (fd.get('notes') || '—')
+      ].join('\n'));
+      const mailto = `mailto:hello@brightsmiles.example?subject=${subject}&body=${body}`;
+      notice.textContent = 'Opening your email app…';
+      notice.classList.add('ok');
+      window.location.href = mailto;
+    });
+  </script>
 </body>
 </html>
