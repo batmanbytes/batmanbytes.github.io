@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="el">
 <head>
-  <title>My Custom Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Μεταφρασμένα Βιβλία</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif', 'Georgia', serif;
+    background: #faf8f5;
+    color: #2c2c2c;
+    line-height: 1.85;
+    font-size: 18px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 30px;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+  }
+
+  .book-list {
+    list-style: none;
+  }
+
+  .book-list li {
+    border-bottom: 1px solid #e0d8cc;
+    padding: 25px 0;
+  }
+
+  .book-list li:first-child {
+    border-top: 2px solid #c9a96e;
+  }
+
+  .book-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .book-list a:hover .book-title {
+    color: #c9a96e;
+  }
+
+  .book-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+
+  .book-subtitle {
+    font-size: 1em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .book-author {
+    font-size: 0.9em;
+    color: #888;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 40px 20px; }
+    h1 { font-size: 1.6em; }
+  }
+</style>
 </head>
 <body>
-  <h1>Hello from GitHub Pages 🚀</h1>
+<div class="container">
+  <h1>Μεταφρασμένα Βιβλία</h1>
+  <ul class="book-list">
+    <li>
+      <a href="ai.html">
+        <div class="book-title">Ο Μεγάλος Θερισμός</div>
+        <div class="book-subtitle">Τεχνητή Νοημοσύνη, Εργασία και η Σανίδα Σωτηρίας του Bitcoin</div>
+        <div class="book-author">Adam Livingston</div>
+      </a>
+    </li>
+  </ul>
+</div>
 </body>
 </html>
-
