@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Privacy — Reading List</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 3em 2em;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: 800;
+    margin-bottom: 0.15em;
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: #f7931a; }
+  .subtitle {
+    color: #8b949e;
+    font-size: 0.95em;
+    margin-bottom: 2.5em;
+  }
+  h2 {
+    color: #f7931a;
+    font-size: 1.25em;
+    font-weight: 700;
+    margin-bottom: 0.2em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  h2 .time {
+    background: rgba(247, 147, 26, 0.12);
+    color: #f7931a;
+    font-size: 0.7em;
+    font-weight: 600;
+    padding: 0.15em 0.55em;
+    border-radius: 5px;
+  }
+  .tier {
+    margin-bottom: 2.2em;
+  }
+  .tier-desc {
+    color: #8b949e;
+    font-size: 0.85em;
+    margin-bottom: 0.8em;
+  }
+  .item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    padding: 0.8em 1em;
+    margin-bottom: 0.6em;
+    transition: border-color 0.2s;
+  }
+  .item:hover {
+    border-color: rgba(247, 147, 26, 0.3);
+  }
+  .item-title {
+    font-weight: 600;
+    font-size: 0.95em;
+    margin-bottom: 0.15em;
+  }
+  .item-title a {
+    color: #e6edf3;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(247, 147, 26, 0.4);
+  }
+  .item-title a:hover {
+    color: #f7931a;
+    border-bottom-color: #f7931a;
+  }
+  .item-author {
+    color: #f7931a;
+    font-size: 0.78em;
+    font-weight: 500;
+  }
+  .item-desc {
+    color: #8b949e;
+    font-size: 0.82em;
+    margin-top: 0.2em;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.68em;
+    padding: 0.1em 0.45em;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 0.3em;
+    vertical-align: middle;
+  }
+  .tag-policy { background: rgba(63, 185, 80, 0.12); color: #3fb950; }
+  .tag-technical { background: rgba(136, 98, 219, 0.12); color: #a371f7; }
+  .tag-legal { background: rgba(248, 81, 73, 0.12); color: #f85149; }
+  .tag-general { background: rgba(210, 153, 34, 0.12); color: #d29922; }
+
+  .footer {
+    margin-top: 3em;
+    padding-top: 1.5em;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #8b949e;
+    font-size: 0.78em;
+  }
+
+  @media print {
+    body { background: #fff; color: #1a1a1a; padding: 1.5em; }
+    .item { border-color: #ddd; }
+    .item-title a { color: #1a1a1a; }
+    .item-desc, .tier-desc, .subtitle, .footer { color: #555; }
+    h2 { color: #b36b00; }
+    h1 span { color: #b36b00; }
+    .item-author { color: #b36b00; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Bitcoin Privacy <span>Reading List</span></h1>
+<p class="subtitle">Companion material for the "Bitcoin Privacy: State of the Art" talk</p>
+
+<!-- ===== 5 MINUTES ===== -->
+<div class="tier">
+  <h2><span class="time">~5 min</span> Quick overview</h2>
+  <p class="tier-desc">Get the core ideas in a single sitting.</p>
+
+  <div class="item">
+    <div class="item-title"><a href="https://sethforprivacy.com/posts/fungibility-graveyard/">Fungibility Graveyard</a> <span class="tag tag-general">general</span></div>
+    <div class="item-author">Seth for Privacy</div>
+    <div class="item-desc">Maintained tracker of every known incident where an exchange flagged, froze, or closed an account over CoinJoin usage. Scrollable, sourced, constantly updated.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://cointelegraph.com/news/binance-returns-frozen-btc-after-user-promises-not-to-use-coinjoin">Binance Returns Frozen BTC After User "Promises" Not to Use CoinJoin</a> <span class="tag tag-general">general</span></div>
+    <div class="item-author">CoinTelegraph</div>
+    <div class="item-desc">The incident that makes the taint problem concrete: a user had to promise behavioral compliance to get their own bitcoin back.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://www.eff.org/deeplinks/2013/06/why-metadata-matters">Why Metadata Matters</a> <span class="tag tag-policy">policy</span></div>
+    <div class="item-author">Electronic Frontier Foundation</div>
+    <div class="item-desc">Not Bitcoin-specific, but frames the argument for why transaction metadata (amounts, timing, counterparties) is as sensitive as content. Helpful for non-technical audiences.</div>
+  </div>
+</div>
+
+<!-- ===== 20 MINUTES ===== -->
+<div class="tier">
+  <h2><span class="time">~20 min</span> Solid understanding</h2>
+  <p class="tier-desc">Understand the tools, the threat model, and the policy landscape.</p>
+
+  <div class="item">
+    <div class="item-title"><a href="https://en.bitcoin.it/wiki/CoinJoin">CoinJoin &mdash; Bitcoin Wiki</a> <span class="tag tag-technical">technical</span></div>
+    <div class="item-author">Greg Maxwell (original concept, 2013)</div>
+    <div class="item-desc">The original CoinJoin concept page. Still the clearest short explanation of how multiple users combine inputs into one transaction to break common-input-ownership heuristics.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://thebitcoinmanual.com/articles/exchanges-avoiding-coinjoined-btc/">Why Are Exchanges Avoiding CoinJoined Bitcoin?</a> <span class="tag tag-general">general</span></div>
+    <div class="item-author">The Bitcoin Manual</div>
+    <div class="item-desc">Explains the mechanics of how exchanges identify and reject coinjoined UTXOs, the analytics firms involved, and what it means for everyday users.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://www.mayerbrown.com/en/insights/publications/2024/12/federal-appeals-court-tosses-ofac-sanctions-on-tornado-cash-and-limits-federal-governments-ability-to-police-crypto-transactions">Federal Appeals Court Tosses OFAC Sanctions on Tornado Cash</a> <span class="tag tag-legal">legal</span></div>
+    <div class="item-author">Mayer Brown</div>
+    <div class="item-desc">Law firm analysis of the Fifth Circuit ruling. Explains why immutable smart contracts aren't "property" under IEEPA and what it means for future sanctions on code.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://gist.github.com/chris-belcher/18ea0e6acdb885a2bfbdee43dcd6b5af">Design for Improving JoinMarket's Resistance to Sybil Attacks Using Fidelity Bonds</a> <span class="tag tag-technical">technical</span></div>
+    <div class="item-author">Chris Belcher</div>
+    <div class="item-desc">The original fidelity bond proposal. Walks through the economic reasoning: why time-locked capital makes Sybil attacks expensive, and how takers should weigh bond values.</div>
+  </div>
+</div>
+
+<!-- ===== 1 HOUR ===== -->
+<div class="tier">
+  <h2><span class="time">~1 hr</span> Deep dive</h2>
+  <p class="tier-desc">The primary sources, full papers, and court documents.</p>
+
+  <div class="item">
+    <div class="item-title"><a href="https://eprint.iacr.org/2021/206">WabiSabi: Centrally Coordinated CoinJoins with Variable Amounts</a> <span class="tag tag-technical">technical</span></div>
+    <div class="item-author">Ficsor, Kogman, Ontivero, Seres (2020)</div>
+    <div class="item-desc">The full WabiSabi paper. Covers KVAC construction, Pedersen commitments, range proofs, and the registration protocol. Requires comfort with elliptic curve cryptography.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://www.courtlistener.com/docket/67497702/united-states-v-rodriguez/">United States v. Rodriguez &mdash; Samourai Wallet Indictment</a> <span class="tag tag-legal">legal</span></div>
+    <div class="item-author">SDNY (April 2024)</div>
+    <div class="item-desc">The actual charging document. Shows how the DOJ frames non-custodial software as money transmission. Essential reading for understanding the legal theory that threatens all privacy tooling.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title"><a href="https://www.opinionarchive.org/pdf/van-loon-v-department-of-treasury.pdf">Van Loon v. Dept. of Treasury &mdash; Fifth Circuit Opinion</a> <span class="tag tag-legal">legal</span></div>
+    <div class="item-author">U.S. Court of Appeals, Fifth Circuit (Nov 2024)</div>
+    <div class="item-desc">The full court ruling that overturned OFAC's Tornado Cash sanctions. Readable even for non-lawyers. The "vending machine" analogy and the property-vs-code distinction are on pages 15-22.</div>
+  </div>
+
+</div>
+
+
+
+</body>
+</html>

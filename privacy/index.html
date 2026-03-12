@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Privacy: State of the Art</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+<style>
+  :root {
+    --r-background-color: #0d1117;
+    --r-main-color: #e6edf3;
+    --r-heading-color: #f0f6fc;
+    --r-link-color: #f7931a;
+    --r-link-color-hover: #ffb347;
+    --r-selection-background-color: #f7931a;
+  }
+  .reveal {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 25px !important;
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    text-transform: none;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .reveal h1 { font-size: 2.2em; }
+  .reveal h2 { font-size: 1.6em; color: #f7931a; }
+  .reveal h3 { font-size: 1.1em; color: #f7931a; }
+  .reveal ul { text-align: left; }
+  .reveal li {
+    margin-bottom: 0.45em;
+    font-size: 0.82em;
+    line-height: 1.4;
+  }
+  .reveal p { font-size: 0.88em; line-height: 1.5; }
+  .reveal .subtitle {
+    color: #8b949e;
+    font-size: 0.7em;
+    margin-top: 1em;
+  }
+  .reveal .highlight { color: #f7931a; font-weight: bold; }
+  .reveal .dim { color: #8b949e; }
+  .reveal .red { color: #f85149; }
+  .reveal .green { color: #3fb950; }
+  .reveal .yellow { color: #d29922; }
+  .reveal .two-col {
+    display: flex;
+    gap: 2em;
+    text-align: left;
+  }
+  .reveal .two-col > div { flex: 1; }
+  .reveal .three-col {
+    display: flex;
+    gap: 1.2em;
+    text-align: left;
+  }
+  .reveal .three-col > div { flex: 1; }
+  .reveal .tag {
+    display: inline-block;
+    background: rgba(247, 147, 26, 0.15);
+    color: #f7931a;
+    border-radius: 6px;
+    padding: 0.15em 0.5em;
+    font-size: 0.75em;
+    margin: 0.1em;
+  }
+  .reveal .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.75em 1em;
+    text-align: left;
+  }
+  .reveal .card h3 { margin: 0 0 0.3em 0; font-size: 0.9em; }
+  .reveal .card p, .reveal .card li { font-size: 0.72em; margin: 0.15em 0; }
+  .reveal .card ul { padding-left: 1.2em; }
+  .reveal .card-row {
+    display: flex;
+    gap: 1em;
+    margin-top: 0.8em;
+  }
+  .reveal .card-row > .card { flex: 1; }
+  .reveal .formula {
+    font-family: 'Courier New', monospace;
+    background: rgba(247, 147, 26, 0.07);
+    border-left: 3px solid #f7931a;
+    padding: 0.5em 1em;
+    font-size: 0.78em;
+    text-align: left;
+    margin: 0.6em 0;
+    color: #e6edf3;
+  }
+  .reveal table {
+    font-size: 0.64em;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 0.6em;
+  }
+  .reveal table th {
+    background: rgba(247, 147, 26, 0.18);
+    color: #f7931a;
+    padding: 0.5em 0.7em;
+    text-align: left;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-weight: 600;
+  }
+  .reveal table td {
+    padding: 0.4em 0.7em;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e6edf3;
+    vertical-align: top;
+  }
+  .reveal table tr:nth-child(even) td {
+    background: rgba(255,255,255,0.025);
+  }
+  .reveal .section-title {
+    font-size: 2.2em;
+    font-weight: 800;
+    margin-bottom: 0.2em;
+    color: #f7931a;
+  }
+  .reveal .section-subtitle {
+    color: #8b949e;
+    font-size: 0.9em;
+  }
+  .reveal blockquote {
+    background: rgba(247, 147, 26, 0.06);
+    border-left: 4px solid #f7931a;
+    padding: 0.7em 1.2em;
+    font-style: normal;
+    font-size: 0.8em;
+    width: 88%;
+    text-align: left;
+    margin: 0.8em auto;
+  }
+  .reveal .step-row {
+    display: flex;
+    gap: 0.8em;
+    margin-top: 0.6em;
+    text-align: left;
+  }
+  .reveal .step {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(247,147,26,0.2);
+    border-radius: 8px;
+    padding: 0.6em 0.8em;
+  }
+  .reveal .step .step-num {
+    color: #f7931a;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .reveal .step p { font-size: 0.68em; margin: 0.2em 0 0; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ SLIDE 1: Title ============ -->
+<section>
+  <h1>Bitcoin Privacy</h1>
+  <h2 style="color: #e6edf3;">State of the Art</h2>
+  <p class="subtitle">Bitcoin Meetup Athens &mdash; 2026</p>
+</section>
+
+<!-- ============ SLIDE 2: The surveillance reality ============ -->
+<section>
+  <h2>The Transparency Problem</h2>
+  <p>Bitcoin's UTXO model stores every output, every amount, every spending relationship — forever, publicly.</p>
+  <div class="card-row" style="margin-top:0.8em;">
+    <div class="card">
+      <h3>The three core heuristics</h3>
+      <ul>
+        <li><span class="highlight">Common Input Ownership (CIOH)</span> &mdash; multiple inputs presumed from the same wallet. Powers most address clustering.</li>
+        <li><span class="highlight">Change detection</span> &mdash; script type, round amounts, output ordering reveal which output is the recipient vs. the change.</li>
+        <li><span class="highlight">Address reuse</span> &mdash; trivially links all payments to the same identity.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The industry that exploits it</h3>
+      <ul>
+        <li>Chainalysis, Elliptic, Scorechain, TRM Labs</li>
+        <li>Cluster addresses &rarr; link to real identities via KYC leakage</li>
+        <li>Score UTXOs as "tainted" &mdash; exchanges act on these scores</li>
+        <li>Direct government contracts: DOJ, IRS-CI, OFAC</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: CoinJoin concept ============ -->
+<section>
+  <h2>CoinJoin: the Core Idea</h2>
+  <p>Multiple users combine inputs into a single transaction, making CIOH ambiguous.</p>
+  <div style="text-align:left; margin-top:0.8em;">
+    <p style="font-size:0.78em; color:#8b949e; margin-bottom:0.3em;">Without CoinJoin:</p>
+    <div class="formula">Alice: UTXO_A &rarr; Payment_to_Bob + Change_A</div>
+    <p style="font-size:0.78em; color:#8b949e; margin: 0.5em 0 0.3em;">With CoinJoin (n participants):</p>
+    <div class="formula">UTXO_A + UTXO_B + ... + UTXO_N &rarr; Out_1 + Out_2 + ... + Out_N</div>
+  </div>
+  <ul style="margin-top:0.8em;">
+    <li>No consensus changes needed &mdash; works on Bitcoin today</li>
+    <li>Key challenge: coordination without a trusted party, and without leaking who-gets-what</li>
+  </ul>
+</section>
+
+<!-- ============ SECTION BREAK ============ -->
+<section>
+  <p class="section-title">WabiSabi</p>
+  <p class="section-subtitle">Keyed-verification anonymous credentials for variable-amount CoinJoin</p>
+</section>
+
+<!-- ============ SLIDE 4: WabiSabi background ============ -->
+<section>
+  <h2>WabiSabi: From ZeroLink to KVAC</h2>
+  <div class="two-col">
+    <div>
+      <h3>ZeroLink / Wasabi v1 (2018)</h3>
+      <ul>
+        <li>Chaumian blind signatures</li>
+        <li>Coordinator issues blind sig over an output credential</li>
+        <li>Registration unlinkable from output registration</li>
+        <li><span class="red">Requires equal-denomination outputs</span> (0.1 BTC standard)</li>
+        <li>Equal outputs are obvious in the transaction graph</li>
+        <li>Change from rounding leaks identity</li>
+      </ul>
+    </div>
+    <div>
+      <h3>WabiSabi (2020 paper &rarr; Wasabi v2, 2022)</h3>
+      <ul>
+        <li>Replace blind sigs with <span class="highlight">KVAC</span> (keyed-verification anonymous credentials)</li>
+        <li>Credentials encode value commitments &mdash; not fixed denominations</li>
+        <li>Coordinator verifies balance without learning amounts</li>
+        <li><span class="green">Variable-amount outputs</span></li>
+        <li>More flexible, harder to fingerprint</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:0.8em; font-size:0.72em;" class="dim">Paper: Ficsor, Kogman, Ontivero, Seres &mdash; "WabiSabi: Centrally Coordinated CoinJoins with Variable Amounts" (2020)</p>
+</section>
+
+<!-- ============ SLIDE 5: WabiSabi KVAC mechanics ============ -->
+<section>
+  <h2>WabiSabi: KVAC Mechanics</h2>
+  <p>KVAC = MAC-based credentials over elliptic curve groups, with three key properties:</p>
+  <div class="three-col" style="margin-top:0.8em;">
+    <div class="card">
+      <h3>Blind issuance</h3>
+      <p>Coordinator issues a credential over a committed amount without seeing the opening. Based on a MAC scheme (Chase-Meiklejohn-Zaverucha over a group).</p>
+    </div>
+    <div class="card">
+      <h3>Unlinkable presentation</h3>
+      <p>Before presenting, user re-randomizes the credential. Coordinator cannot link a presentation back to the issuance. Breaks input &rarr; output linkage.</p>
+    </div>
+    <div class="card">
+      <h3>Homomorphic amounts</h3>
+      <p>Amounts are Pedersen commitments: <code>C = v&middot;G + r&middot;H</code>. Coordinator enforces that &Sigma; inputs = &Sigma; outputs + fee, without learning <em>v</em>.</p>
+    </div>
+  </div>
+  <div class="formula" style="margin-top:0.9em;">
+    &Sigma; C<sub>in</sub> = &Sigma; C<sub>out</sub> + fee&middot;G &nbsp;&nbsp;&nbsp; (verified via homomorphic sum + ZK proof)
+  </div>
+  <p style="font-size:0.72em; margin-top:0.4em;" class="dim">Range proofs (Bulletproofs) ensure v &ge; 0 on each credential &mdash; preventing inflation via negative amounts.</p>
+</section>
+
+<!-- ============ SLIDE 6: WabiSabi registration flow ============ -->
+<section>
+  <h2>WabiSabi: Registration Flow</h2>
+  <div class="step-row">
+    <div class="step">
+      <div class="step-num">1</div>
+      <p><strong>Input phase</strong><br>Alice connects via Tor (fresh circuit), registers UTXO, commits to amount, requests a credential from coordinator.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <p><strong>Credential issuance</strong><br>Coordinator verifies UTXO ownership &amp; existence. Issues MAC-based credential over the committed amount (blind).</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <p><strong>Output phase</strong><br>Alice connects via a <em>different</em> Tor circuit, re-randomizes credential, presents it, registers output. Proves balance sum. Coordinator cannot link to phase 1.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <p><strong>Signing phase</strong><br>All participants sign the complete transaction. Coordinator broadcasts.</p>
+    </div>
+  </div>
+  <p style="font-size:0.72em; margin-top:0.8em; text-align:left;" class="dim">Separate Tor circuits between phases is critical &mdash; IP linkage between input and output registration would break the entire scheme.</p>
+</section>
+
+<!-- ============ SLIDE 7: WabiSabi downsides ============ -->
+<section>
+  <h2>WabiSabi: Honest Downsides</h2>
+  <ul>
+    <li><span class="red">Central coordinator</span> &mdash; zkSNACKs shut down their WabiSabi coordinator in June 2024. Self-hosting is possible but most users relied on the default. Smaller anonymity sets on alternative coordinators.</li>
+    <li><span class="red">The chain analysis partnership</span> &mdash; discovered ~2022: zkSNACKs were using chain analysis scores to block "dirty" UTXOs from joining. Directly contradicts the privacy mission. <sup>[1]</sup></li>
+    <li><span class="red">Not trustless in practice</span> &mdash; the implemented client does not verify coordinator key consistency. A malicious coordinator can issue different credential parameters to each client, partitioning them and linking inputs to outputs. <sup>[2]</sup></em></li>
+    <li><span class="yellow">Complexity</span> &mdash; KVAC is significantly more complex than blind signatures. Larger cryptographic attack surface, harder to audit.</li>
+  </ul>
+</section>
+
+<!-- ============ SECTION BREAK ============ -->
+<section>
+  <p class="section-title">JoinMarket</p>
+  <p class="section-subtitle">Decentralized liquidity market with no central coordinator</p>
+</section>
+
+<!-- ============ SLIDE 8: JoinMarket maker/taker ============ -->
+<section>
+  <h2>JoinMarket: Maker / Taker Model</h2>
+  <div class="two-col">
+    <div>
+      <h3>Makers (yield generators)</h3>
+      <ul>
+        <li>Post offers to a public orderbook (IRC relay / Nostr)</li>
+        <li>Advertise: min/max join size, fee rate, counterparty count</li>
+        <li>Stay online passively, waiting for takers</li>
+        <li>Earn small fees from each join they participate in</li>
+        <li>Continuously remix their own UTXOs as a side effect</li>
+        <li>No identity required &mdash; pseudonymous by nick</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Takers</h3>
+      <ul>
+        <li>Browse the orderbook, select N makers</li>
+        <li>Specify the exact CoinJoin amount they want</li>
+        <li>Coordinate the join via encrypted messages</li>
+        <li>Pay fees to each participating maker</li>
+        <li>Don't need to stay online long-term</li>
+        <li>Output equal to selected amount</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:0.8em; font-size:0.75em;" class="dim">No central coordinator &mdash; the orderbook is just a message board. No single party can block a taker from participating or surveil which UTXO maps to which output.</p>
+</section>
+
+<!-- ============ SLIDE 9: Fidelity bonds ============ -->
+<section>
+  <h2>JoinMarket: Fidelity Bonds</h2>
+  <p><strong>The Sybil problem</strong>: an attacker runs 100 fake maker identities cheaply. A taker selecting 5 makers might select 5 Sybils &rarr; privacy collapses to zero.</p>
+  <div style="margin-top:0.9em;">
+    <h3>Solution (introduced 2021): time-locked bonds</h3>
+    <ul>
+      <li>Makers can lock BTC in a <span class="highlight">timelocked address</span> (OP_CLTV)</li>
+      <li>Bond value is computed as roughly <span class="highlight">B&sup2; &times; t&sup2;</span> (bitcoins locked &times; time locked, squared)</li>
+      <li>Takers preferentially select high-fidelity-bond makers from the orderbook</li>
+      <li>The locked BTC earns nothing &mdash; it's a real economic sacrifice</li>
+      <li>To fake N identities convincingly you need N real bonds = N &times; capital &times; time locked</li>
+    </ul>
+  </div>
+  <div class="formula" style="margin-top:0.7em;">
+    fidelity_weight &prop; locked_BTC&sup2; &times; lock_duration&sup2; &times; bitcoin_price
+  </div>
+  <p style="font-size:0.72em; margin-top:0.5em;" class="dim">Bond scripts and amounts are on-chain &mdash; anyone can independently verify maker fidelity without trusting anyone.</p>
+</section>
+
+<!-- ============ SLIDE 10: JoinMarket tradeoffs ============ -->
+<section>
+  <h2>JoinMarket: Tradeoffs</h2>
+  <div class="two-col">
+    <div>
+      <h3 class="green">Strengths</h3>
+      <ul>
+        <li>No central coordinator &rarr; more decentralized</li>
+        <li>Fidelity bonds give meaningful Sybil resistance</li>
+        <li>Makers are incentivized to stay online &rarr; consistent liquidity</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="red">Weaknesses</h3>
+      <ul>
+        <li><span class="red">Cost for the taker</span> &mdash; taker pays all mining fees for the entire multi-party transaction (N+1 inputs, N+1 outputs) plus maker fees. Multiple rounds needed for real anonymity &mdash; costs multiply. High-fee environments make it prohibitive.</li>
+        <li><span class="red">Toxic change</span> &mdash; if your UTXO doesn't match the join amount exactly, the leftover change is directly linked to your original UTXO. Pre-mix identity leaks through the change output.</li>
+        <li><span class="red">Technical UX</span> &mdash; relatively bad UI. High barrier for non-technical users.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION BREAK ============ -->
+<section>
+  <p class="section-title">Samourai / Whirlpool</p>
+  <p class="section-subtitle">Equal-output mixing, post-mix toolset, and what happened</p>
+</section>
+
+<!-- ============ SLIDE 11: Whirlpool mechanics ============ -->
+<section>
+  <h2>Whirlpool: How It Works</h2>
+  <p>Equal-output CoinJoin, 5 participants per round, free remixing.</p>
+  <div class="two-col" style="margin-top:0.6em;">
+    <div>
+      <h3>Pool denominations</h3>
+      <ul>
+        <li>100,000 sats (0.001 BTC)</li>
+        <li>1,000,000 sats (0.01 BTC)</li>
+        <li>5,000,000 sats (0.05 BTC)</li>
+        <li>50,000,000 sats (0.5 BTC)</li>
+      </ul>
+      <h3 style="margin-top:0.8em;">Tx0 (premix)</h3>
+      <p style="font-size:0.75em;">Splits your UTXO into pool-denomination outputs + coordinator fee + "doxxic change" (returned immediately, not mixed). The change is clearly identifiable.</p>
+    </div>
+    <div>
+      <h3>Mix cycle</h3>
+      <ul>
+        <li>5 participants: 2 fresh inputs + 3 free riders (already-mixed UTXOs)</li>
+        <li>Free remixing: once mixed, a UTXO re-enters at no cost &rarr; growing anonymity set</li>
+        <li>Remixing is passive/background while wallet is connected</li>
+      </ul>
+      <h3 style="margin-top:0.8em;">Post-mix tools</h3>
+      <ul>
+        <li><span class="tag">Stowaway</span> PayJoin between Samourai users</li>
+        <li><span class="tag">StonewallX2</span> 2-person collaborative spend</li>
+        <li><span class="tag">Ricochet</span> extra hops to destination (defeats "blockchain distance" heuristics)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 12: The arrests ============ -->
+<section>
+  <h2>The Samourai Arrests</h2>
+  <p><strong>April 24, 2024</strong>: Keonne Rodriguez (CEO) and William Lonergan Hill (CTO) arrested.</p>
+  <div class="card-row" style="margin-top:0.7em;">
+    <div class="card">
+      <h3>SDNY charges</h3>
+      <ul>
+        <li>Conspiracy to commit money laundering (18 U.S.C. &sect; 1956)</li>
+        <li>Operating an unlicensed money transmitting business (18 U.S.C. &sect; 1960)</li>
+        <li>Alleged: $2B+ transactions processed; $100M+ from darknet markets</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The legal theory</h3>
+      <p>DOJ argued Samourai was a "money transmitter" because it <em>routed</em> others' funds &mdash; even though it never took custody.</p>
+      <p style="margin-top:0.4em;">This directly challenges the non-custodial model: if routing funds through a protocol you built counts as money transmission, what else does?</p>
+    </div>
+  </div>
+  <ul style="margin-top:0.8em;">
+    <li>Servers and domain (samourai.io) seized; app removed from Google Play</li>
+    <li>Rodriguez was arrested at Barcelona airport</li>
+    <li>Case ongoing as of 2026</li>
+  </ul>
+</section>
+
+<!-- ============ SLIDE 13: What survives ============ -->
+<section>
+  <h2>What Survives After Samourai</h2>
+  <div class="card-row">
+    <div class="card">
+      <h3>ASHIGARU</h3>
+      <p>Community fork of Samourai Wallet, developed and maintained independently. Japanese-led team. Available on GitLab. Whirlpool coordinator separate from the seized original.</p>
+    </div>
+    
+    <div class="card">
+      <h3>The code</h3>
+      <p>Samourai Wallet and Whirlpool are open source (Apache 2.0). The tools don't disappear with the company &mdash; but the default coordinator and the user base have fragmented.</p>
+    </div>
+  </div>
+  <p style="margin-top:0.8em; font-size:0.75em;" class="yellow">The broader effect: chilling. Other Bitcoin privacy developers paused work or shifted jurisdiction after April 2024.</p>
+</section>
+
+
+<!-- ============ SLIDE: Exchange Taint Practices ============ -->
+<section>
+  <h2>Exchanges vs. CoinJoin: The "Taint" Problem</h2>
+  <p>Centralized exchanges use blockchain analytics to flag coinjoined UTXOs &mdash; penalizing users for exercising on-chain privacy.</p>
+  <table>
+    <thead>
+      <tr><th>Exchange</th><th>Action</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Binance</strong></td><td class="red">Froze withdrawal</td><td>Investigated user for withdrawing to Wasabi. Returned funds only after user promised not to mix again. <sup>[3]</sup></td></tr>
+      <tr><td><strong>Paxos</strong></td><td class="red">Flagged deposits</td><td>Released official statement discouraging CoinJoin. Blocked deposits with mixing history.</td></tr>
+      <tr><td><strong>BlockFi</strong></td><td class="red">Closed loan</td><td>Flagged CoinJoin deposits (~2020). One user's loan closed underwater (50% loss) because <em>previous owner</em> of the coins had mixed. <sup>[4]</sup></td></tr>
+      <tr><td><strong>Gemini</strong></td><td class="red">Froze account</td><td>Account frozen after prior Wasabi transactions discovered (May 2022).</td></tr>
+      <tr><td><strong>BitMEX</strong></td><td class="yellow">Flagged account</td><td>Flagged months after JoinMarket withdrawal (March 2021).</td></tr>
+      <tr><td><strong>Bitstamp</strong></td><td class="yellow">Flagged account</td><td>Flagged users months/years after Wasabi-related transactions.</td></tr>
+      <tr><td><strong>Paxful</strong></td><td class="red">Froze account</td><td>Frozen on attempted withdrawal to Wasabi Wallet.</td></tr>
+      <tr><td><strong>Bitfinex</strong></td><td class="red">Froze account</td><td>Frozen on attempted withdrawal to Wasabi.</td></tr>
+      <tr><td><strong>BitVavo</strong></td><td class="red">Closed account</td><td>Account closed on attempted Wasabi withdrawal.</td></tr>
+      <tr><td><strong>Swan Bitcoin</strong></td><td class="red">Terminated accounts</td><td>Custodians terminated accounts for mixer interaction (Oct 2023).</td></tr>
+      <tr><td><strong>Chivo Wallet</strong></td><td class="yellow">Flagged &amp; froze</td><td>El Salvador's state wallet flagged CoinJoin txs from Wasabi. <sup>[5]</sup></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>The Fungibility Threat</h2>
+  <div class="card-row">
+    <div class="card">
+      <h3>How they detect it</h3>
+      <ul>
+        <li>Blockchain analytics firms: <span class="highlight">Chainalysis</span>, <span class="highlight">CipherTrace</span>, <span class="highlight">Elliptic</span></li>
+        <li>Detect CoinJoin patterns: equal outputs, coordinator addresses, Whirlpool structure</li>
+        <li>Assign "risk scores" to UTXOs &mdash; exchanges act on the score</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Why it matters</h3>
+      <ul>
+        <li>Users penalized for <em>receiving</em> coins that were previously mixed by someone else</li>
+        <li>CoinJoin is legal &mdash; no law prohibits it. Exchanges act preemptively.</li>
+        <li>Creates two classes of bitcoin: "clean" and "tainted" &mdash; undermining fungibility</li>
+        <li>The Binance "promise" incident: behavioral compliance for using a legal tool</li>
+      </ul>
+    </div>
+  </div>
+  <blockquote style="margin-top:0.8em;">
+    "Update: I got my sats back, but not without promising Big Brother I wouldn't mix those utxos."<br>
+    <span class="dim">&mdash; Binance user, after having frozen BTC returned</span>
+  </blockquote>
+  <p style="font-size:0.65em; margin-top:0.6em;" class="dim">
+    Full tracker: sethforprivacy.com/posts/fungibility-graveyard/ &nbsp;|&nbsp; 6102bitcoin.com/coinjoin-flagging/
+  </p>
+</section>
+
+<!-- ============ SECTION BREAK ============ -->
+<section>
+  <p class="section-title">Tornado Cash</p>
+  <p class="section-subtitle">The Ethereum privacy case &mdash; sanctions, arrests, and legal precedent</p>
+</section>
+
+<!-- ============ SLIDE: Tornado Cash overview ============ -->
+<section>
+  <h2>Tornado Cash: What Happened</h2>
+  <p>A non-custodial, smart-contract mixer on Ethereum. Users deposit ETH/tokens into a pool and withdraw to a fresh address using a zero-knowledge proof &mdash; breaking the on-chain link.</p>
+  <div class="card-row" style="margin-top:0.7em;">
+    <div class="card">
+      <h3>OFAC sanctions (Aug 2022)</h3>
+      <ul>
+        <li>U.S. Treasury sanctioned Tornado Cash smart contract addresses</li>
+        <li>First time OFAC sanctioned <em>autonomous code</em> rather than a person or entity</li>
+        <li>All U.S. persons prohibited from interacting with the contracts</li>
+        <li>GitHub repos removed; developer RPC endpoints blocked access</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The arrests</h3>
+      <ul>
+        <li><strong>Alexey Pertsev</strong> &mdash; arrested in Netherlands (Aug 2022). Convicted of money laundering by Dutch court (May 2024). Sentenced to <span class="red">64 months</span>. Released pending appeal.</li>
+        <li><strong>Roman Storm</strong> &mdash; arrested in U.S. (Aug 2023). Trial Aug 2025: convicted of unlicensed money transmission; jury <span class="yellow">deadlocked</span> on money laundering &amp; sanctions charges. <sup>[6]</sup></li>
+        <li><strong>Roman Semenov</strong> &mdash; indicted, remains at large.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE: Tornado Cash legal aftermath ============ -->
+<section>
+  <h2>Tornado Cash: The Legal Aftermath</h2>
+  <div class="card-row">
+    <div class="card">
+      <h3>Fifth Circuit ruling (Nov 2024)</h3>
+      <ul>
+        <li>Court ruled OFAC <span class="green">overstepped its authority</span></li>
+        <li>Immutable smart contracts are not "property" under IEEPA &mdash; no one owns or controls them</li>
+        <li><em>"A vending machine has an owner; Tornado Cash's smart contracts do not."</em></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Treasury delisting (Mar 2025)</h3>
+      <ul>
+        <li>Treasury <span class="green">lifted sanctions</span> on Tornado Cash rather than appeal <sup>[7]</sup></li>
+        <li>Texas court permanently enjoined OFAC from re-sanctioning (Apr 2025) <sup>[8]</sup></li>
+        <li>Acknowledged "novel legal and policy issues"</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;">
+    <h3>Parallels with Samourai</h3>
+    <ul>
+      <li>Same DOJ theory: writing non-custodial privacy software = operating a money transmitter</li>
+      <li>Storm's mixed verdict shows juries struggle with this framing</li>
+      <li>Sanctions overturned, but <span class="red">criminal cases continue</span> &mdash; developers still face prison for writing code</li>
+      <li>Combined chilling effect on all crypto privacy development, Bitcoin and Ethereum alike</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SLIDE 17: Conclusions ============ -->
+<section>
+  <h2>Honest Conclusions</h2>
+  <div class="two-col">
+    
+    <div>
+      <h3>What's still missing</h3>
+      <ul>
+        <li><span class="red">Amount privacy</span> &mdash; all three CoinJoin implementations leave amounts visible. Confidential Transactions would fix this; not on Bitcoin mainnet.</li>
+        <li><span class="red">Anonymity set size</span> &mdash; privacy tools need a crowd. Current user bases are small.</li>
+        <li><span class="red">Post-mix discipline</span> &mdash; users routinely merge outputs and undo all gains</li>
+        <li><span class="red">Legal clarity</span> &mdash; if non-custodial privacy infrastructure = money transmission, the next decade looks difficult for builders</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 18: Questions ============ -->
+<section>
+  <h1>Questions?</h1>
+  <p style="margin-top: 1.5em; font-size: 0.85em; color: #8b949e;">
+    WabiSabi paper: eprint.iacr.org/2021/206<br>
+    JoinMarket: github.com/JoinMarket-Org/joinmarket-clientserver<br>
+    Whirlpool: github.com/Samourai-Wallet/Whirlpool<br>
+    ASHIGARU: ashigaru.rs
+  </p>
+  <p style="margin-top: 1em; font-size: 0.7em; color: #8b949e; text-align: left;">
+    [1] nobsbitcoin.com/zksnacks-is-now-blocking-u-s-residents-and-citizens <br>
+    [2] groups.google.com/g/bitcoindev/c/CbfbEGozG7c/m/w2B-RRdUCQAJ <br>
+    [3] cointelegraph.com/news/binance-returns-frozen-btc-after-user-promises-not-to-use-coinjoin <br>
+    [4] cryptheory.org/blockfi-is-flagging-deposits-with-coinjoin-history <br>
+    [5] nobsbitcoin.com/el-salvadors-chivo-wallet-is-reportedly-flagging-and-freezing-txs-from-wasabi <br>
+    [6] mayerbrown.com/en/insights/publications/2025/08/the-tornado-cash-trials-mixed-verdict <br>
+    [7] home.treasury.gov/news/press-releases/sb0057 <br>
+    [8] coindesk.com/policy/2025/04/29/tornado-cash-can-t-be-sanctioned-again-texas-judge-rules
+</p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  slideNumber: true,
+  transition: 'slide',
+  transitionSpeed: 'default',
+  center: true,
+  width: 1280,
+  height: 720,
+  margin: 0.1
+});
+</script>
+</body>
+</html>
