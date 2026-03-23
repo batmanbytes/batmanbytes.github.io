@@ -233,7 +233,7 @@
       <ul>
         <li>Replace blind sigs with <span class="highlight">KVAC</span> (keyed-verification anonymous credentials)</li>
         <li>Credentials encode value commitments &mdash; not fixed denominations</li>
-        <li>Coordinator verifies balance without learning amounts</li>
+        <li>Coordinator verifies balance &mdash; sees output amounts at registration, but cannot link them to inputs</li>
         <li><span class="green">Variable-amount outputs</span></li>
         <li>More flexible, harder to fingerprint</li>
       </ul>
@@ -257,13 +257,9 @@
     </div>
     <div class="card">
       <h3>Homomorphic amounts</h3>
-      <p>Amounts are Pedersen commitments: <code>C = v&middot;G + r&middot;H</code>. Coordinator enforces that &Sigma; inputs = &Sigma; outputs + fee, without learning <em>v</em>.</p>
+      <p>Amounts are Pedersen commitments: <code>C = v&middot;G + r&middot;H</code>. Credential sub-amounts are hidden during issuance. Coordinator learns output amounts at presentation, but cannot link them back to inputs.</p>
     </div>
   </div>
-  <div class="formula" style="margin-top:0.9em;">
-    &Sigma; C<sub>in</sub> = &Sigma; C<sub>out</sub> + fee&middot;G &nbsp;&nbsp;&nbsp; (verified via homomorphic sum + ZK proof)
-  </div>
-  <p style="font-size:0.72em; margin-top:0.4em;" class="dim">Range proofs (Bulletproofs) ensure v &ge; 0 on each credential &mdash; preventing inflation via negative amounts.</p>
 </section>
 
 <!-- ============ SLIDE 6: WabiSabi registration flow ============ -->
@@ -276,11 +272,11 @@
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <p><strong>Credential issuance</strong><br>Coordinator verifies UTXO ownership &amp; existence. Issues MAC-based credential over the committed amount (blind).</p>
+      <p><strong>Credential issuance</strong><br>Coordinator verifies UTXO ownership &amp; existence. Issues MAC-based credential over the committed amount.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <p><strong>Output phase</strong><br>Alice connects via a <em>different</em> Tor circuit, re-randomizes credential, presents it, registers output. Proves balance sum. Coordinator cannot link to phase 1.</p>
+      <p><strong>Output phase</strong><br>Alice connects via a <em>different</em> Tor circuit, re-randomizes credential, presents it, reveals output amount in plaintext &amp; registers output address. Coordinator sees the amount but cannot link it to phase 1.</p>
     </div>
     <div class="step">
       <div class="step-num">4</div>
@@ -580,22 +576,6 @@
   </div>
 </section>
 
-<!-- ============ SLIDE 17: Conclusions ============ -->
-<section>
-  <h2>Honest Conclusions</h2>
-  <div class="two-col">
-    
-    <div>
-      <h3>What's still missing</h3>
-      <ul>
-        <li><span class="red">Amount privacy</span> &mdash; all three CoinJoin implementations leave amounts visible. Confidential Transactions would fix this; not on Bitcoin mainnet.</li>
-        <li><span class="red">Anonymity set size</span> &mdash; privacy tools need a crowd. Current user bases are small.</li>
-        <li><span class="red">Post-mix discipline</span> &mdash; users routinely merge outputs and undo all gains</li>
-        <li><span class="red">Legal clarity</span> &mdash; if non-custodial privacy infrastructure = money transmission, the next decade looks difficult for builders</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
 <!-- ============ SLIDE 18: Questions ============ -->
 <section>
