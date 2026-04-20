@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testnet4 Min-Difficulty Fix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf7f0;
+    --ink: #1c1b18;
+    --muted: #6a655d;
+    --rule: #cec7b4;
+    --accent: #1d4f6c;
+    --accent-soft: #e8eef3;
+    --mark: #f2e9cf;
+    --mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --serif: "Iowan Old Style", "Source Serif Pro", Charter, "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4em 1.75em 6em;
+    font-feature-settings: "liga", "kern";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header.masthead {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.75em 0 1em;
+    margin-bottom: 2.5em;
+    font-family: var(--sans);
+  }
+  .eyebrow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    font-size: 0.72em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.9em;
+  }
+  .eyebrow strong { color: var(--ink); font-weight: 600; }
+  h1 {
+    font-family: var(--serif);
+    font-size: 2.15em;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25em;
+  }
+  .deck {
+    font-family: var(--sans);
+    color: var(--muted);
+    font-size: 0.98em;
+    font-weight: 400;
+    max-width: 52ch;
+  }
+
+  .abstract {
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink);
+    padding: 0 0 0 1.1em;
+    border-left: 2px solid var(--accent);
+    margin: 0 0 2.5em;
+  }
+  .abstract b {
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78em;
+    display: block;
+    margin-bottom: 0.3em;
+  }
+
+  section { margin-bottom: 2.5em; }
+  h2 {
+    font-family: var(--sans);
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.9em;
+    padding-bottom: 0.35em;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    gap: 0.75em;
+  }
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.15em;
+    font-weight: 700;
+    margin: 1.4em 0 0.35em;
+    letter-spacing: -0.005em;
+  }
+  h3:first-child { margin-top: 0; }
+  h3 .tag {
+    font-family: var(--mono);
+    font-size: 0.62em;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.15em 0.5em;
+    border-radius: 2px;
+    margin-left: 0.5em;
+    vertical-align: 2px;
+  }
+
+  p { margin-bottom: 0.85em; }
+  p + p { text-indent: 0; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--mark);
+    color: var(--ink);
+    padding: 0.05em 0.3em;
+    border-radius: 2px;
+  }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 0.84em;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 0.75em 1em;
+    margin: 0.8em 0 1.2em;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 1em;
+  }
+
+  ol.steps {
+    list-style: none;
+    counter-reset: step;
+    margin: 0.5em 0 0;
+  }
+  ol.steps > li {
+    counter-increment: step;
+    padding-left: 2.5em;
+    position: relative;
+    margin-bottom: 1em;
+  }
+  ol.steps > li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    font-family: var(--mono);
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  ol.steps > li > strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 700;
+    margin-bottom: 0.1em;
+  }
+
+  ul.bullets {
+    margin: 0.3em 0 0.8em 1.25em;
+  }
+  ul.bullets li {
+    margin-bottom: 0.25em;
+  }
+
+  nav.toc {
+    font-family: var(--sans);
+    font-size: 0.78em;
+    color: var(--muted);
+    margin: 0 0 2.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em 1.1em;
+  }
+  nav.toc a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35em;
+  }
+  nav.toc a:hover {
+    color: var(--accent);
+  }
+  nav.toc a .num {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+  html { scroll-behavior: smooth; }
+  section { scroll-margin-top: 1.5em; }
+
+  .kv {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.75em 1em;
+    margin: 0.5em 0 0.5em;
+  }
+  .kv div { display: flex; gap: 0.5em; }
+  .kv div + div { margin-top: 0.25em; }
+  .kv span:first-child {
+    color: var(--muted);
+    min-width: 10em;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(29, 79, 108, 0.35);
+  }
+  a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  footer {
+    margin-top: 4em;
+    padding-top: 1.2em;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.78em;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 16px; padding: 2.5em 1.25em 4em; }
+    h1 { font-size: 1.8em; }
+    .eyebrow { flex-direction: column; gap: 0.3em; }
+  }
+
+  @media print {
+    html, body { background: #fff; }
+    body { padding: 1em 0.5in; max-width: none; }
+    pre, .kv { background: #fafafa; }
+    a { color: var(--ink); border-bottom: none; }
+    h2 { break-after: avoid; }
+    h3 { break-after: avoid; }
+    pre { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">
+    <span><strong>Technical brief</strong> · Testnet4</span>
+    <span>Letter for miners</span>
+  </div>
+  <h1>Soft fork on testnet4 that fixes the min difficulty blocks exploit</h1>
+  <p class="deck">A targeted, height-activated change that makes BIP&nbsp;94's min-difficulty escape hatch unreachable.</p>
+</header>
+
+<p class="abstract">
+  <b>Summary.</b> Invalidate any non-difficulty-adjustment block whose timestamp is more than 20 minutes than its previous block's timestamp, after block height 151,200 (epoch 75 boundary, ~September 6th 2026).
+</p>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#problem"><span class="num">§1</span> Problem</a>
+  <a href="#build"><span class="num">§2</span> Build &amp; run</a>
+  <a href="#activation"><span class="num">§3</span> Activation</a>
+  <a href="#specification"><span class="num">§4</span> Specification</a>
+  <a href="#references"><span class="num">§5</span> References</a>
+</nav>
+
+<section id="problem">
+  <h2><span class="num">§1</span> Problem</h2>
+
+  <p>Testnet4's min-difficulty rule (allowing difficulty-1 blocks after 20 minutes) is being exploited, causing ~85-90% of blocks to be CPU-mined min-difficulty blocks. This results in a race of CPU miners broadcasting blocks at exactly the second that it's acceptable. This race is so intense that CPU miners have figured out sending empty blocks, as they propagate faster than those that contain transactions, resulting in a network where transactions are confirmed at only the remaining ASIC blocks, that have ~1 hour average block times.</p>
+
+  <p>After the fork, min difficulty blocks will no longer be allowed, as blocks that have a timestamp longer than 20 minutes than their previous blocks become invalid, except difficulty-adjusting blocks (epoch boundary blocks).</p>
+
+  <p>This change is intentionally a soft fork, so that it also fixes the problem for non-upgraded nodes as long as majority of the hashrate is mining on upgraded clients, with the least network disruption.</p>
+</section>
+
+<section id="build">
+  <h2><span class="num">§2</span> What miners need to do</h2>
+
+  <p>Run your miner against a patched Bitcoin Core node. Any node enforcing the new rules will also produce compliant block templates. The patched branch is <code>testnet4-softfork</code> on <a href="https://github.com/batmanbytes/bitcoin">github.com/batmanbytes/bitcoin</a>.</p>
+
+  <h3>2.1 &nbsp; Install build dependencies <span class="tag">linux</span></h3>
+  <p>On Debian or Ubuntu:</p>
+<pre><code>sudo apt update
+sudo apt install build-essential cmake pkgconf python3 \
+                 libevent-dev libboost-dev libsqlite3-dev \
+                 git ca-certificates</code></pre>
+  <p>On macOS with Homebrew, the equivalent is <code>brew install cmake pkgconf boost libevent sqlite</code>. For other distributions and full dependency detail see <code>doc/build-*.md</code> in the cloned repository.</p>
+
+  <h3>2.2 &nbsp; Clone the patched branch</h3>
+<pre><code>git clone -b testnet4-softfork \
+  https://github.com/batmanbytes/bitcoin.git
+cd bitcoin</code></pre>
+  <p>Or, if you already have a clone of <code>bitcoin/bitcoin</code>, add this fork as a remote and check out the branch:</p>
+<pre><code>git remote add batmanbytes https://github.com/batmanbytes/bitcoin.git
+git fetch batmanbytes
+git checkout batmanbytes/testnet4-softfork</code></pre>
+
+  <h3>2.3 &nbsp; Configure and build</h3>
+<pre><code>cmake -B build
+cmake --build build</code></pre>
+  <p>The resulting binaries land in <code>build/bin/</code>.</p>
+
+  <h3>2.4 &nbsp; Start the node on testnet4</h3>
+<pre><code>./build/bin/bitcoind -testnet4 -daemon</code></pre>
+  <p>Point your mining stack at this node for <code>getblocktemplate</code>. Once the chain reaches height 151&nbsp;200 the new rule activates automatically; no further action required.</p>
+</section>
+
+<section id="activation">
+  <h2><span class="num">§3</span> Activation</h2>
+
+  <p>The soft fork activates on testnet4 by at block height 151&nbsp;200. No version-bits signalling is involved.</p>
+
+  <div class="kv">
+    <div><span>Chain</span><span>testnet4</span></div>
+    <div><span>Activation height</span><span>151 200  (epoch 75)</span></div>
+    <div><span>Consensus parameter</span><span>min_difficulty_blocks_fix_height</span></div>
+    <div><span>Default on other chains</span><span>0  (disabled)</span></div>
+    <div><span>Mechanism</span><span>height flag-day, no signalling</span></div>
+  </div>
+
+  <p>Previously-valid blocks at heights below the activation height are unaffected: history does not change. An non-upgraded node that produces a cap-violating block at height &ge;&nbsp;151&nbsp;201 will find that upgraded nodes reject it, causing a short-lived fork until the non-upgraded miner upgrades or is outpaced. Miners are strongly encouraged to upgrade before activation.</p>
+</section>
+
+<section id="specification">
+  <h2><span class="num">§4</span> Specification</h2>
+
+  <h3>4.1 &nbsp; Consensus check <span class="tag">consensus</span></h3>
+  <p>For every block at or above the activation height, the following must hold:</p>
+
+<pre><code>block.nTime &le; pindexPrev-&gt;nTime + 2 * nPowTargetSpacing</code></pre>
+
+  <p>On testnet4, <code>nPowTargetSpacing = 600</code>, so the cap is 1200&nbsp;s. A block that violates the cap is rejected with reason string <code>time-too-far-ahead</code>. The rule is a strict tightening of the existing validation rules, therefore a soft fork: every block that is valid under the new rule was also valid under the old rule.</p>
+
+  <h3>4.2 &nbsp; Adjustment-block carve-out <span class="tag">consensus</span></h3>
+  <p>The cap is <em>not</em> enforced on blocks whose height is divisible by <code>DifficultyAdjustmentInterval()</code> (2016). On such blocks the retargeted difficulty is always required, regardless of timestamp, so no exploit exists to close. Capping adjustment-block timestamps would therefore serve no purpose, and would prevent miners from publishing truthful wall-clock time on the one block per retarget period where they would otherwise be free to do so. </p>
+
+  <h3>4.3 &nbsp; Template-side clamp <span class="tag">mining</span></h3>
+  <p>A matching clamp is applied in <code>node/miner</code> so that <code>getblocktemplate</code> and the internal block assembler never return a <code>curtime</code> that would be rejected by §4.1. The helper is <code>GetMaximumTime(pindexPrev, consensus)</code>, mirroring the existing <code>GetMinimumTime</code>. On adjustment blocks it returns <code>INT64_MAX</code>, matching the consensus carve-out in §4.2.</p>
+</section>
+
+<section id="references">
+  <h2><span class="num">§5</span> References</h2>
+
+  <ul class="bullets">
+    <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0094.mediawiki">BIP&nbsp;94 &mdash; Testnet4 specification</a>. The rule this fork neutralises, plus the timewarp mitigation it leaves intact.</li>
+    <li><a href="https://github.com/bitcoin/bitcoin">Bitcoin Core</a>. Patch lives on the <code>testnet4-softfork</code> branch. Touched: <code>src/validation.cpp</code>, <code>src/node/miner.cpp</code>, <code>src/consensus/params.h</code>, <code>src/kernel/chainparams.cpp</code>.</li>
+    <li>Unit tests: <code>src/test/testnet4_miner_tests.cpp</code> &mdash; boundary behaviour of <code>GetMaximumTime</code>, clamping behaviour of <code>UpdateTime</code>, activation and later adjustment blocks.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Corrections and questions: <a href="https://github.com/batmanbytes">github.com/batmanbytes</a></span>
+  <span>Version&nbsp;1.0</span>
+</footer>
+
+</body>
+</html>
